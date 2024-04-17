@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Video List</title>
+</head>
+<body>
+    <h2>Video List</h2>
+    
+    <form method="GET">
+        <input type="text" name="q" placeholder="Search videos by name" value="{{ query }}">
+        <button type="submit">Search</button>
+    </form>
+
+    <ul>
+    {% for video in videos %}
+        <li>
+            <video width="320" height="240" controls>
+                <source src="{{ video.video_file.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <p>{{ video.name }}</p>
+            {% if video.user == request.user %}
+                [<a href="{% url 'edit_video' video.id %}">Edit</a>]
+                [<a href="{% url 'delete_video' video.id %}">Delete</a>]
+            {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+
+</body>
+</html>
